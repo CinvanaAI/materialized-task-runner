@@ -1,0 +1,14 @@
+{
+  "kind": "captured synthetic execution projection",
+  "command": "python -m examples.demo",
+  "input_example": "examples/demo.py",
+  "observed_output": {
+    "unauthorized_refused": true,
+    "status": "complete",
+    "result": {
+      "greeting": "Hello Avery"
+    },
+    "runtime_cleaned": true
+  },
+  "projection_note": "Selected fields from a successful local run. Machine paths, temporary identifiers and execution timestamps are omitted. Re-run the linked example for fresh evidence."
+}

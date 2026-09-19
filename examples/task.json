@@ -1,0 +1,14 @@
+{
+  "name": "Greeting",
+  "packages": [
+    {
+      "name": "formatter",
+      "logic": {
+        "logic_source": "def format_name(value):\n    return value.strip().title()"
+      }
+    }
+  ],
+  "workflow": {
+    "workflow_source": "from formatter import format_name\n\ndef run_workflow(payload):\n    return {'greeting': 'Hello ' + format_name(payload['name'])}"
+  }
+}

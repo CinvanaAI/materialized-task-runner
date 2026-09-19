@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "materialized-task-runner"
+version = "0.1.0"
+description = "Materialize embedded package/workflow source, execute it with an explicit gate, and retain hash evidence."
+requires-python = ">=3.11"
+license = {file = "LICENSE.md"}
+
+[tool.setuptools.packages.find]
+include = ["materialized_task_runner*"]
