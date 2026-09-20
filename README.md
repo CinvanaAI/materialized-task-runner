@@ -17,6 +17,9 @@ The complete [task](examples/task.json) contains a formatter module plus `run_wo
 
 Separating task materialization from the authoring workbench makes saved work independently executable and reviewable. Read the [mechanism and implementation notes](docs/MECHANISM.md) for the specific boundaries and source links.
 
+For the failure path, run `python -m examples.failure_walkthrough`; the
+[authoring and evidence guide](docs/MECHANISM.md#author-run-and-inspect-one-task) explains what survives.
+
 ## Scope
 
 This executes arbitrary trusted Python. A fresh process is not a filesystem/network security boundary, and timeout handling does not establish isolation of descendant processes. There is no model connector or dependency solver.

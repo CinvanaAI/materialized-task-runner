@@ -84,16 +84,14 @@ def write_package_scripts_from_child_data(
         package_path = output_dir_obj / f"{safe_package_name}.py"
         package_path_str = str(package_path)
 
-        if safe_package_name in written_by_safe_name:
-            existing_path = written_by_safe_name[safe_package_name]
-            if existing_path != package_path_str:
-                raise ValueError(
-                    f"Sanitized package name collision produced different paths for package: {package_name}"
-                )
-            continue
+        if safe_package_name.casefold() in {"workflow", "_runner"}:
+            raise ValueError(f"Package name is reserved by the runner: {package_name}")
+        collision_key = safe_package_name.casefold()
+        if collision_key in written_by_safe_name:
+            raise ValueError(f"Sanitized package name collision: {package_name}")
 
         package_path.write_text(logic_source.rstrip() + "\n", encoding="utf-8")
-        written_by_safe_name[safe_package_name] = package_path_str
+        written_by_safe_name[collision_key] = package_path_str
         written_paths.append(package_path_str)
 
     return written_paths

@@ -1,0 +1,12 @@
+{
+  "synthetic": true,
+  "status": "failed",
+  "error_observed": "ValueError",
+  "hashed_files": [
+    "_runner.py",
+    "payload.json",
+    "workflow.py"
+  ],
+  "runtime_cleaned": true,
+  "evidence_retained_until_example_cleanup": true
+}

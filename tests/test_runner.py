@@ -52,6 +52,18 @@ class RunnerTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 MaterializedTaskRunner(tmp).run(broken, {}, authorize=True)
 
+    def test_ambiguous_and_reserved_modules_fail_before_execution(self) -> None:
+        for names in (("format-ter", "formatter"), ("Formatter", "formatter"), ("workflow",), ("_runner",)):
+            with self.subTest(names=names), tempfile.TemporaryDirectory() as tmp:
+                candidate = task()
+                candidate["packages"] = [{"name": name, "logic": {"logic_source": "VALUE = 1"}} for name in names]
+                candidate["workflow"]["workflow_source"] = "from pathlib import Path\ndef run_workflow(payload):\n    Path('executed.txt').write_text('unexpected')\n"
+                with self.assertRaisesRegex(RuntimeError, "collision|reserved"):
+                    MaterializedTaskRunner(tmp).run(candidate, {}, authorize=True, cleanup_runtime=False)
+                self.assertFalse(list(Path(tmp).rglob("executed.txt")))
+                record = json.loads(next((Path(tmp) / "evidence").glob("*.json")).read_text())
+                self.assertEqual(record["status"], "failed")
+
     def test_payload_must_be_json(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaises(ValueError):
